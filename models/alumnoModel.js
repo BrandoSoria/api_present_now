@@ -15,6 +15,11 @@ const Alumno = {
       [alumno.numero_de_control, alumno.nombre_completo, alumno.grupo, alumno.carrera, alumno.semestre, alumno.materia, alumno.horario]);
     
     return rows;
+  },
+
+  registrarAsistencia: async (alumnoId, asistio, observaciones) => {
+    const [rows] = await pool.execute('INSERT INTO asistencias (alumno_id, fecha_hora, asistio, observaciones) VALUES (?, NOW(), ?, ?)', [alumnoId, asistio, observaciones]);
+    return rows;
   }
 };
 
