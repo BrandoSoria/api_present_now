@@ -49,7 +49,7 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const alumnoId = req.params.id;
-    const nuevoDatos = req.body; // Supongo que estás enviando los nuevos datos en el cuerpo de la solicitud
+    const nuevoDatos = req.body;
   
     try {
       const resultado = await Alumno.actualizar(alumnoId, nuevoDatos);

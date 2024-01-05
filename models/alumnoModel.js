@@ -1,6 +1,6 @@
 // models/alumnoModel.js
 const pool = require('./conexion');
-const moment = require('moment'); // Importa moment
+const moment = require('moment'); 
 
 const Alumno = {
   registrar: async (alumno) => {
