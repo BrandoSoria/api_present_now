@@ -52,7 +52,43 @@ const Alumno = {
     // Continuar con el registro de asistencia
     const [rows] = await pool.execute('INSERT INTO asistencias (alumno_id, fecha_hora, asistio, observaciones) VALUES (?, NOW(), ?, ?)', [alumnoId, asistioValue, observacionesValue]);
     return rows;
-  }
+  },
+  obtenerTodos: async () => {
+    const [alumnos] = await pool.execute('SELECT * FROM alumnos');
+    return alumnos;
+  },
+  obtenerPorId: async (alumnoId) => {
+    const [alumno] = await pool.execute('SELECT * FROM alumnos WHERE id = ?', [alumnoId]);
+    return alumno[0];
+  },
+  eliminar: async (alumnoId) => {
+    const [resultado] = await pool.execute('DELETE FROM alumnos WHERE id = ?', [alumnoId]);
+    return resultado;
+  },
+  actualizar: async (alumnoId, nuevoDatos) => {
+    try {
+      // Construir la consulta SQL con los marcadores de posición
+      const sql = 'UPDATE alumnos SET numero_de_control = ?, nombre_completo = ?, grupo = ?, carrera = ?, semestre = ?, materia = ?, horario = ? WHERE id = ?';
+  
+      // Ejecutar la consulta con los datos actualizados y el ID del alumno
+      const [resultado] = await pool.execute(sql, [
+        nuevoDatos.numero_de_control,
+        nuevoDatos.nombre_completo,
+        nuevoDatos.grupo,
+        nuevoDatos.carrera,
+        nuevoDatos.semestre,
+        nuevoDatos.materia,
+        nuevoDatos.horario,
+        alumnoId
+      ]);
+  
+      return resultado;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
 };
 
 module.exports = Alumno;

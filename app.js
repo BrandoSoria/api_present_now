@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // Agregado para manejar CORS
 const morgan = require('morgan'); // Agregado para el registro de solicitudes HTTP
 const Alumno = require('./models/alumnoModel');
+const alumnosRouter = require('./routes/alumnos');
 const pool = require('./models/conexion');
 
 const app = express();
@@ -35,6 +36,9 @@ app.post('/alumnos', async (req, res) => {
     res.status(500).json({ error: 'Error al registrar el alumno' });
   }
 });
+
+//ruta para obtener datos de alumno y CRUD
+app.use('/alumnos', alumnosRouter);
 
 // Ruta para registrar la asistencia de un alumno
 app.post('/asistencias', async (req, res) => {
