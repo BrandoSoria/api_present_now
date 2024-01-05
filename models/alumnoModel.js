@@ -1,7 +1,7 @@
 // models/alumnoModel.js
 const pool = require('./conexion');
 const moment = require('moment');
-
+//version buena
 const Alumno = {
   registrar: async (alumno) => {
     const [existente] = await pool.execute('SELECT * FROM alumnos WHERE numero_de_control = ?', [alumno.numero_de_control]);
