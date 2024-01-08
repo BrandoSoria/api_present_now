@@ -6,6 +6,7 @@ const morgan = require('morgan'); // Agregado para el registro de solicitudes HT
 const Alumno = require('./models/alumnoModel');
 const alumnosRouter = require('./routes/alumnos');
 const pool = require('./models/conexion');
+const asistenciasRouter = require('./routes/asistencias'); // Importa el enrutador de asistencias
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -56,6 +57,16 @@ app.post('/asistencias', async (req, res) => {
     console.error('Error al registrar la asistencia:', error);
     res.status(500).json({ error: 'Error al registrar la asistencia' });
   }
+});
+
+
+// Incluye el enrutador de asistencias para manejar las rutas relacionadas con las asistencias
+app.use('/asistencias', asistenciasRouter);
+
+// Manejo de errores global
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Hubo un error en el servidor' });
 });
 
 // Manejo de errores global
