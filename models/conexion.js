@@ -2,10 +2,10 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 const pool = mysql.createPool({
-  host: process.env.MYSQLHOST || 'monorail.proxy.rlwy.net',
-  user: process.env.MYSQLUSER || 'root',
-  password: process.env.MYSQLPASSWORD || '3-H24D61gG5d-45Cfgf1165E1G6Bdb55',
-  database: process.env.MYSQLDATABASE || 'railway',
+  host: process.env.DB_HOST || 'monorail.proxy.rlwy.net',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '3-H24D61gG5d-45Cfgf1165E1G6Bdb55',
+  database: process.env.DB_NAME || 'railway',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
