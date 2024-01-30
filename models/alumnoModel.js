@@ -24,10 +24,20 @@ const Alumno = {
 };
 
   
-  obtenerTodos: async () => {
-    const [alumnos] = await pool.execute('SELECT * FROM alumnos');
-    return alumnos;
+obtenerTodos: async (materia) => {
+  // Construir la consulta SQL filtrando por materia si se proporciona
+  let sql = 'SELECT * FROM alumnos';
+  const params = [];
+
+  if (materia) {
+    sql += ' WHERE materia = ?';
+    params.push(materia);
+  }
+
+  const [alumnos] = await pool.execute(sql, params);
+  return alumnos;
   };
+  
   obtenerPorId: async (alumnoId) => {
     const [alumno] = await pool.execute('SELECT * FROM alumnos WHERE id = ?', [alumnoId]);
     return alumno[0];

@@ -3,9 +3,15 @@ const express = require('express');
 const router = express.Router();
 const Alumno = require('../models/alumnoModel');
 
+
 router.get('/', async (req, res) => {
   try {
-    const alumnos = await Alumno.obtenerTodos();
+    // Obtener el parámetro de materia de la solicitud
+    const { materia } = req.query;
+
+    // Llamar a obtenerTodos pasando el parámetro de materia
+    const alumnos = await Alumno.obtenerTodos(materia);
+
     res.json(alumnos);
   } catch (error) {
     console.error(error.message);
@@ -13,22 +19,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
-  const alumnoId = req.params.id;
-
-  try {
-    const alumno = await Alumno.obtenerPorId(alumnoId);
-
-    if (!alumno) {
-      return res.status(404).json({ mensaje: 'Alumno no encontrado' });
-    }
-
-    res.json(alumno);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Error en el servidor');
-  }
-});
 
 router.delete('/:id', async (req, res) => {
   const alumnoId = req.params.id;
