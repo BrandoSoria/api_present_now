@@ -1,6 +1,6 @@
 // models/alumnoModel.js
 const pool = require('./conexion');
-const moment = require('moment'); 
+const moment = require('moment');
 
 const Alumno = {
   registrar: async (alumno) => {
@@ -17,35 +17,36 @@ const Alumno = {
 
     return rows;
   },
+
   registrarAsistencia: async (alumnoId, asistio, observaciones) => {
     const [rows] = await pool.execute('INSERT INTO asistencias (alumno_id, fecha_hora, asistio, observaciones) VALUES (?, NOW(), ?, ?)', [alumnoId, asistio, observaciones]);
     return rows;
-  }
-};
+  },
 
-  
-obtenerTodos: async (materia) => {
-  // Construir la consulta SQL filtrando por materia si se proporciona
-  let sql = 'SELECT * FROM alumnos';
-  const params = [];
+  obtenerTodos: async (materia) => {
+    // Construir la consulta SQL filtrando por materia si se proporciona
+    let sql = 'SELECT * FROM alumnos';
+    const params = [];
 
-  if (materia) {
-    sql += ' WHERE materia = ?';
-    params.push(materia);
-  }
+    if (materia) {
+      sql += ' WHERE materia = ?';
+      params.push(materia);
+    }
 
-  const [alumnos] = await pool.execute(sql, params);
-  return alumnos;
-  };
-  
+    const [alumnos] = await pool.execute(sql, params);
+    return alumnos;
+  },
+
   obtenerPorId: async (alumnoId) => {
     const [alumno] = await pool.execute('SELECT * FROM alumnos WHERE id = ?', [alumnoId]);
     return alumno[0];
-  };
+  },
+
   eliminar: async (alumnoId) => {
     const [resultado] = await pool.execute('DELETE FROM alumnos WHERE id = ?', [alumnoId]);
     return resultado;
-  };
+  },
+
   actualizar: async (alumnoId, nuevoDatos) => {
     try {
       // Construir la consulta SQL con los marcadores de posición
@@ -68,7 +69,7 @@ obtenerTodos: async (materia) => {
       console.error(error);
       throw error;
     }
-  },
-
+  }
+};
 
 module.exports = Alumno;
